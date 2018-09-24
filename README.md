@@ -9,6 +9,4 @@ Introduction
 3. Brain MR radiomics
 
 # Author
-Korea university Biomedical Engineering B.S.
-Yonsei university medical school CCIDS research intern
 Sang Wook Kim
