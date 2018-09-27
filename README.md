@@ -1,4 +1,4 @@
-# koyon-project
+# Medical AI projects
 Introduction
  - This repository contains various medical deep learning projects
  
