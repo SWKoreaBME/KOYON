@@ -4,26 +4,27 @@ from data_utils import *
 import os
 import nibabel as nib
 import numpy as np
-import SimpleITK as sitk
 
 '''
-(1) population : list of files you want to fix (T2 or T1 nii file in common)
-(2) filename : each file you want to fix from list population
+    rigid_body_registration.py
 
-Below codes make registrated file from python code
-    - Registration method : rigid body registration
+    (1) population : list of files you want to fix (T2 or T1 nii file in common)
+    (2) filename : each file you want to fix from list population
 
-* Now existing mask type (sequence) : necro, T2, T1_GD
+    Below codes make registrated file from python code
+        - Registration method : rigid body registration
 
-Version
+    * Now existing mask type (sequence) : necro, T2, T1_GD
 
-2018. september 
-    Registration T1_nii and T1_mask --> T2
+    Version
 
-2018. 10. 3 
-    (1) necro and whole file included
-    (2) function MakeMaskName added
+    2018. september 
+        Registration T1_nii and T1_mask --> T2
 
+    2018. 10. 3 
+        (1) necro and whole file included
+        (2) function MakeMaskName added
+        
 '''
 
 def GetImageFromNII(nii_file):
@@ -51,8 +52,8 @@ def MakeMaskName(mask_file):
     elif 'necro' in mask_file:
         return '_necro_to_T2_mask'
 
-resampled_path='/home/ccids-sw/cest/GBMvsMets/GBM_resampled'
-save_path='/home/ccids-sw/cest/GBMvsMets/GBM_registered'
+resampled_path='/path/to/resampled_data/'
+save_path='path/to/save_data'
 
 mask_imgs=[img for img in os.listdir(resampled_path) if 'mask' in img]
 subjects=list(set([a.split('_')[0] for a in os.listdir(resampled_path)]))
@@ -90,9 +91,6 @@ for sub in subjects:
 
         for filename in population:
 
-            # name = filename.lstrip(resampled_path).rstrip('_T2.nii.gz') + '_ce_to_T2_mask'
-            # name = filename.lstrip(resampled_path).split('.')[0]+'_to_T2_mask'
-
             if 'mask' in moving_mask:
                 name=sub+MakeMaskName(moving_mask)
             else:
@@ -116,6 +114,5 @@ for sub in subjects:
             print('{} -- Saved'.format(name))
 
             if image_array.shape != result_array.shape: error.append(name)
-
 
 print('ERROR -- {}'.format(error))

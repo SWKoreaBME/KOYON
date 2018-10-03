@@ -2,8 +2,12 @@ import os
 import numpy as np
 import nibabel as nib
 from nilearn import image
+'''
+    data_utils.py
 
-def resample(img_array, target_voxel=(0.5, 0.5, 5)):
+    Collection of functions used for Rigid body Registration
+'''
+def resample(img_array, target_voxel=(1, 1, 1)):
     '''
     :param img_array:input type; nifti file format
     :param target_voxel: resample size
@@ -16,13 +20,21 @@ def resample(img_array, target_voxel=(0.5, 0.5, 5)):
 
     return img_resampled_img, voxel_size
 
-
-def mask2binary(mask_resampled_img):
+def mask2binary(mask_resampled_img, tr=0.7):
     '''
+    Make mask to binary file
+
+    2018. 10. 3 
+        threshold for parameter added
     :param mask_resampled_img: numpy array; Resampled numpy array
+    :param rt: threshold for intensity
+        (example)
+            value = 1 (if original_value > threshold)
+            value = 0 (if original_value < threshold)
+
     :return: mask_binary_img: numpy array with binary data
     '''
-    roi = np.where(mask_resampled_img > 0.7)
+    roi = np.where(mask_resampled_img > tr)
     roi = list(roi)
     size = mask_resampled_img.shape
     mask_binary_img = np.zeros(size)
@@ -42,6 +54,21 @@ def check_voxel_size(img):
     return voxel_size
 
 def make_affine(voxel_size):
+    '''
+
+    :param voxel_size: voxel size of nifti file # [0.5, 0.5, 5]
+    :return: affine format of voxel_size
+
+        (example) 
+
+        input = [0.5, 0.5, 5]
+
+        output = 
+        [[0.5, 0, 0, 0],
+         [0, 0.5, 0, 0],
+         [0, 0, 0.5, 0],
+         [0, 0, 0, 5]]
+    '''
     fin = np.zeros((4,4))
     fin[3][3] = 1
     for i, a in enumerate(voxel_size):
@@ -49,8 +76,7 @@ def make_affine(voxel_size):
     return fin
 
 def numpy2nii(array, affine):
-    nii_file = nib.Nifti1Image(array, affine)
-    return nii_file
+    return nib.Nifti1Image(array, affine)
 
 def save_file(name, array, path, voxel):
     affine=make_affine(voxel)
@@ -58,9 +84,12 @@ def save_file(name, array, path, voxel):
     nib.save(nii_file, os.path.join(path, name))
 
 def data_struct(folder_path, mask_path, origin_path):
+    '''
+    Only apply to special format of folder
+    check https://github.com/SWKoreaBME/Medical-AI-projects for details    
+    '''
     subjects = os.listdir(os.path.join(folder_path, origin_path))
     masks = os.listdir(os.path.join(folder_path, mask_path))
-
     '''Get one subject whole data'''
     whole_path = {}
     for subject in subjects:
