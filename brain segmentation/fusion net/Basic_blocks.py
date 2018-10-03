@@ -8,6 +8,12 @@ import torchvision.datasets as dset
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 
+'''
+    License by : Gun ho Choi , https://github.com/GunhoChoi/FusionNet-Pytorch 
+    modified by : Sang Wook Kim
+
+    Basic_blocks.py
+'''
 
 def conv_block(in_dim,out_dim,act_fn):
     model = nn.Sequential(

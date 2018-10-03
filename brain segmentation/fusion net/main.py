@@ -2,6 +2,14 @@ from FusionNet import *
 from model_utils_sw import *
 
 from random import shuffle
+'''
+    main.py
+
+    main code for train Fusion Net
+
+    18 / 10 / 3
+        (1) path removed, annotations added
+'''
 
 # hyperparameters
 
@@ -12,9 +20,8 @@ epoch = 200
 val_percent = 0.1
 
 # input pipeline
-
-img_dir = '../train_original'
-mask_dir = '../train_masks_original'
+img_dir = '/path/to/img_dir'
+mask_dir = '/path/to/mask_dir'
 
 res = split_train_val(img_dir, val_percent=val_percent)
 
@@ -22,13 +29,6 @@ fusion = nn.DataParallel(FusionGenerator(input_nc=1, output_nc=1, ngf=32)).cuda(
 
 loss_func = nn.SmoothL1Loss()
 optimizer = torch.optim.Adam(fusion.parameters(), lr=lr)
-
-# try:
-#     fusion = torch.load('./fusion.pkl')
-#     print("\n--------model restored--------\n")
-# except:
-#     print("\n--------model not restored--------\n")
-#     pass
 
 print('batch size      :  {}\n'
       'img size        :  {}\n'

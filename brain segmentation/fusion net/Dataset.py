@@ -9,8 +9,11 @@ from skimage import transform, io
 import torchvision.transforms as transforms
 
 import torch
+'''
+    Dataset.py
 
-
+    Data handling functions
+'''
 def nii2numpy(nii):
     return nib.load(nii).get_data()
 
@@ -92,8 +95,8 @@ def ReadImage(image, dir, im_size):
     return image_array
 
 # # Get Data =============================================
-# im_path='/media/ccids-sw/2TB/segmentation_data/N4_Done'
-# mask_path='/media/ccids-sw/2TB/segmentation_data/IDHwt_mask'
+# im_path='/path/to/img_dir'
+# mask_path='path/to/mask_dir'
 #
 # save_im_path='/media/ccids-sw/2TB/segmentation_data/train'
 # save_mask_path='/media/ccids-sw/2TB/segmentation_data/train_masks'
@@ -123,4 +126,3 @@ def ReadImage(image, dir, im_size):
 # img_dir='/media/ccids-sw/2TB/segmentation_data/train'
 # res=split_train_val(img_dir=img_dir, val_percent=0.1)
 # print(res['train'])
-

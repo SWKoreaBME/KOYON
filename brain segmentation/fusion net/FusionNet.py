@@ -1,5 +1,12 @@
 from Basic_blocks import * 
 
+'''
+    License by : Gun ho Choi , https://github.com/GunhoChoi/FusionNet-Pytorch 
+    modified by : Sang Wook Kim
+
+    FusionNet.py
+'''
+
 
 class Conv_residual_conv(nn.Module):
 
