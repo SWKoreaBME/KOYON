@@ -45,7 +45,7 @@ Thumbs.db
 /GBM/*.txt
 /GBM/*.log
 /GBM/*.ipynb
-/GBM/__pycache__
+/GBM/__pycache__/*
 
 # specific files #
 ##################
