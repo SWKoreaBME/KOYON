@@ -1,0 +1,2 @@
+python GBM_resample_main.py -i /home/ccids-sw/cest/GBMvsMets/swk/re_raw -o /home/ccids-sw/cest/GBMvsMets/swk/re_resampled -v 1,1,1; python GBM_registration_main.py -i /home/ccids-sw/cest/GBMvsMets/swk/re_resampled -o /home/ccids-sw/cest/GBMvsMets/swk/re_registration
+
